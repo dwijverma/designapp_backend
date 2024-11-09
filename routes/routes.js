@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const fontGeneration = require("../controllers/fontGeneration.js");
 
+router.post("/", async (req, res) => {
+  res.status(200).json({ msg: "hello world" });
+});
+
 router.post("/generate-fonts", async (req, res) => {
   const msg = await fontGeneration(req);
   // console.log(msg)
