@@ -13,7 +13,7 @@ const critiqueRoutes = require("./routes/critiqueRoutes.js");
 const colorPaletteRoutes = require("./routes/color-paletteRoutes.js");
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 2000;
 
 app.use(
   cookieSession({
