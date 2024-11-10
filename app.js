@@ -37,6 +37,10 @@ app.use(cors());
 
 app.use(express.json());
 
+app.get("/hello", async (req, res) => {
+  res.status(200).json({ msg: "hello world" });
+});
+
 app.use("/", routes);
 app.use("/auth", authRoutes);
 app.use("/critique", critiqueRoutes);
