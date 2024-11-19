@@ -36,7 +36,7 @@ app.use(passport.session());
 // app.use(cors());
 
 const corsOptions = {
-  origin: "https://designershangout.com", // Replace with your frontend domain
+  origin: "https://www.designershangout.com", // Replace with your frontend domain
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true, // Enable if using cookies or credentials
