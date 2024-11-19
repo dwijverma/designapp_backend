@@ -33,7 +33,18 @@ app.use(passport.session());
 // );
 
 // tempory allow access from anywhere -
-app.use(cors());
+// app.use(cors());
+
+const corsOptions = {
+  origin: "https://designershangout.com", // Replace with your frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // Enable if using cookies or credentials
+};
+
+app.use(cors(corsOptions));
+
+app.options("*", cors(corsOptions)); // Handle preflight requests
 
 app.use(express.json());
 
