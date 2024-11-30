@@ -10,9 +10,12 @@ const CritiqueHistory = require("../models/critique.model.js");
 const { deleteImage } = require("../services/cloudinary.js");
 
 router.post("/", upload.single("design"), async (req, res) => {
-  const output = await critique(req);
-  // console.log(output);
-  res.status(200).json({ critique: output });
+  try {
+    const output = await critique(req);
+    res.status(200).json({ critique: output });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 router.post("/follow-up", upload.single("design"), async (req, res) => {
@@ -68,7 +71,7 @@ router.post("/delete", async (req, res) => {
       } catch (error) {
         console.log(error);
       }
-      
+
       const result2 = await User.findByIdAndUpdate(
         userID,
         { $pull: { designCritique: objectId } },
