@@ -24,6 +24,7 @@ router.post(
         return res.status(400).json({ error: err.message });
       } else if (err) {
         // Handle other errors
+        console.log(err);
         return res
           .status(500)
           .json({ error: "An error occurred during file upload." });
