@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema(
         ref: "Color Collections",
       },
     ],
+    fontCollections: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Font Collections",
+      },
+    ],
   },
   { timestamps: true }
 );

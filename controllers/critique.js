@@ -1,5 +1,5 @@
 const model = require("../services/geminiService.js");
-const uploadOnCloudinary = require("../services/cloudinary.js");
+const { uploadOnCloudinary } = require("../services/cloudinary.js");
 const CritiqueHistory = require("../models/critique.model.js");
 const User = require("../models/user.model.js");
 const fs = require("fs");
@@ -87,19 +87,9 @@ Here is the JSON schema -
       },
       "required": ["Layout", "Typography", "ColorHarmony", "Alignment", "VisualImpact"]
     },
-    "Visual Overlay Recommendations": {
-      "type": "object",
-      "properties": {
-        "Layout": { "type": "string" },
-        "Typography": { "type": "string" },
-        "ColorHarmony": { "type": "string" },
-        "Alignment": { "type": "string" },
-        "VisualImpact": { "type": "string" }
-      },
-      "required": ["Layout", "Typography", "ColorHarmony", "Alignment", "VisualImpact"]
-    }
+    
   },
-  "required": ["Score", "Detailed Feedback", "Visual Overlay Recommendations"]
+  "required": ["Score", "Detailed Feedback"]
 }
   Here is the example output
 {
@@ -117,13 +107,6 @@ Here is the JSON schema -
     Alignment: 'The alignment of elements is generally good. However, the contact information on the bottom card is not properly aligned, making it seem a bit messy. Align the contact information elements consistently to the left or right.',
     VisualImpact: 'The design has a clean and modern feel but lacks a certain visual impact. Consider adding a subtle background texture or pattern to add depth and interest. The logo is simple and could be more visually appealing with the use of gradients or shadows. Experiment with different logo styles to find a more engaging visual.'
   },
-  'Visual Overlay Recommendations': {
-    Layout: 'Overlay the top card to visualize the excessive use of space by the logo and suggest areas for reducing the logo size or adding white space. Overlay the bottom card to highlight the disorganization in the contact information and suggest improvements.',
-    Typography: 'Overlay the contact details on the bottom card to emphasize the need for a larger font size. Overlay the text to visualize any misalignment issues and suggest solutions.',
-    ColorHarmony: 'Overlay the background of both cards to visualize the potential for a subtle gradient. Overlay specific areas to demonstrate the need for contrast adjustments.',
-    Alignment: 'Overlay the bottom card to highlight the misalignment of the contact information and suggest alignment improvements.',
-    VisualImpact: 'Overlay both cards to visualize areas where textures or patterns could be added. Overlay the logo to demonstrate improvements with gradients or shadows'
-  }
 }
 `;
   const file = fileToGenerativePart(design.path, design.mimetype);
@@ -141,7 +124,10 @@ Here is the JSON schema -
       console.error("Error parsing JSON:", error);
     }
     const image = uploadToCloudinary.url;
+    const imageID = uploadToCloudinary.public_id;
+    console.log("this is from cloudinary    ", uploadToCloudinary);
     data.image = image;
+    data.imageID = imageID;
 
     // const designAnalysisInText = analysisToText(data);
 
@@ -154,6 +140,7 @@ Here is the JSON schema -
           userId: user._id,
           projectName: projectName,
           image: image,
+          imageID: imageID,
           analysis: data,
           followUp: [],
         });

@@ -30,12 +30,10 @@ const model = require("../services/geminiService.js");
 
 const createColorPalette = async (req) => {
   const { description } = req.body;
-  const prompt = `Generate a color palette of 7 colors for this description - ${description}. 
-    generate only color codes nothing else, generate 5 palette of 7 colors.the output will require parsing later so 
-    return output in such a way that it is in single line without any /n or any special charaters. 
-    example return - 
-    ( 1: ['#ff0000', '#00ff00', '#0000ff'],
-    2: ['#ff9900', '#66ff33', '#3399ff'] )`;
+  const prompt = `Generate 5 color palettes of 7 colors each for this description - ${description}. 
+    sample output expected - 
+    { 1: ['#ff0000', '#00ff00', '#0000ff'],
+    2: ['#ff9900', '#66ff33', '#3399ff'] }`;
   const result = await model.generateContent(prompt);
   const response = await result.response;
   const text = response.text().replace(/```json\n|\n```|\n/g, "");
