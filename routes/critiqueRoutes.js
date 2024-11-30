@@ -9,14 +9,39 @@ const { ObjectId } = mongoose.Types;
 const CritiqueHistory = require("../models/critique.model.js");
 const { deleteImage } = require("../services/cloudinary.js");
 
-router.post("/", upload.single("design"), async (req, res) => {
-  try {
-    const output = await critique(req);
-    res.status(200).json({ critique: output });
-  } catch (error) {
-    console.log(error);
+router.post(
+  "/",
+  (req, res, next) => {
+    upload.single("design")(req, res, function (err) {
+      if (err instanceof multer.MulterError) {
+        // Handle Multer-specific errors
+        if (err.code === "LIMIT_FILE_SIZE") {
+          return res
+            .status(400)
+            .json({ error: "File size exceeds the maximum limit of 10 MB." });
+        }
+        return res.status(400).json({ error: err.message });
+      } else if (err) {
+        // Handle other errors
+        return res
+          .status(500)
+          .json({ error: "An error occurred during file upload." });
+      }
+      next();
+    });
+  },
+  async (req, res) => {
+    try {
+      const output = await critique(req);
+      res.status(200).json({ critique: output });
+    } catch (error) {
+      console.error("Error during critique:", error);
+      res
+        .status(500)
+        .json({ error: "An error occurred while processing the critique." });
+    }
   }
-});
+);
 
 router.post("/follow-up", upload.single("design"), async (req, res) => {
   const output = await followUp(req);
