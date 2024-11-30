@@ -83,7 +83,7 @@ router.get("/logout", async (req, res) => {
     try {
       req.logout();
       req.session = null;
-      res.redirect(`${process.env.FRONTEND_URL}/`);
+      res.redirect(`${process.env.FRONTEND_URL}`);
     } catch (error) {
       console.log(error);
     }
