@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
 const CritiqueHistory = require("../models/critique.model.js");
 const { deleteImage } = require("../services/cloudinary.js");
+const multer = require("multer");
 
 router.post(
   "/",
