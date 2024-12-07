@@ -5,6 +5,14 @@ const FontCollection = require("../models/fontCollection.model.js");
 const User = require("../models/user.model.js");
 
 router.post("/generate-fonts", async (req, res) => {
+  const { description } = req.body;
+  const regex = /^[a-zA-Z0-9 .,!?'"@#&()-]*$/; // Allowing letters, numbers, and a set of special characters.
+  if (!regex.test(description)) {
+    return res
+      .status(400)
+      .json({ error: "Description contains invalid characters." });
+  }
+
   const msg = await fontGeneration(req);
   // console.log(msg)
 

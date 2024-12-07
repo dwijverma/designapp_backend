@@ -15,18 +15,18 @@ const colorPaletteRoutes = require("./routes/color-paletteRoutes.js");
 const app = express();
 const port = process.env.PORT || 2000;
 
-const corsOptions = {
-  origin: "https://www.designershangout.com", // Replace with your frontend domain
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true, // Enable if using cookies or credentials
-};
 // const corsOptions = {
-//   origin: process.env.FRONTEND_URL, // Replace with your frontend domain
+//   origin: "https://www.designershangout.com", // Replace with your frontend domain
 //   methods: ["GET", "POST", "PUT", "DELETE"],
 //   allowedHeaders: ["Content-Type", "Authorization"],
 //   credentials: true, // Enable if using cookies or credentials
 // };
+const corsOptions = {
+  origin: "http://localhost:3000", // Replace with your frontend domain
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // Enable if using cookies or credentials
+};
 
 app.use(cors(corsOptions));
 

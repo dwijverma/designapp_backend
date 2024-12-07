@@ -33,6 +33,16 @@ router.post(
     });
   },
   async (req, res) => {
+    const { projectName, description } = req.body;
+    const regex = /^[a-zA-Z0-9 .,!?'"@#&()-]*$/; // Allowing letters, numbers, and a set of special characters.
+    if (!regex.test(projectName) || !regex.test(description)) {
+      return res
+        .status(400)
+        .json({
+          error: "Project name or description contains invalid characters.",
+        });
+    }
+
     try {
       const output = await critique(req);
       res.status(200).json({ critique: output });

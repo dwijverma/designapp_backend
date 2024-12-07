@@ -3,7 +3,7 @@ const express = require("express");
 const passport = require("passport");
 const User = require("../models/user.model.js");
 const axios = require("axios");
-require("dotenv").config()
+require("dotenv").config();
 const router = express.Router();
 
 router.get(
@@ -18,7 +18,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
-    res.redirect(`https://www.designershangout.com/`);
+    res.redirect(`http://localhost:3000/`);
   }
 );
 

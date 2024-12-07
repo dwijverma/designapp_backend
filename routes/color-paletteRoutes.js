@@ -6,6 +6,14 @@ const ColorCollection = require("../models/colorCollection.model.js");
 const User = require("../models/user.model.js");
 
 router.post("/", async (req, res) => {
+  const { description } = req.body;
+  const regex = /^[a-zA-Z0-9 .,!?'"@#&()-]*$/; // Allowing letters, numbers, and a set of special characters.
+  if (!regex.test(description)) {
+    return res
+      .status(400)
+      .json({ error: "Description contains invalid characters." });
+  }
+
   const output = await createColorPalette(req);
   // console.log(output);
   const colorArr = output;
