@@ -55,6 +55,62 @@ app.use("/critique", critiqueRoutes);
 app.use("/planning", projectPlanningRoutes);
 app.use("/color-palette", colorPaletteRoutes);
 
+const staticUrls = [
+  {
+    loc: "https://designershangout.com/",
+    lastmod: "2024-12-01",
+    changefreq: "daily",
+    priority: 1.0,
+  },
+  {
+    loc: "https://designershangout.com/brainstorming",
+    lastmod: "2024-12-01",
+    changefreq: "monthly",
+    priority: 0.9,
+  },
+  {
+    loc: "https://designershangout.com/color-schemes",
+    lastmod: "2024-12-01",
+    changefreq: "weekly",
+    priority: 0.8,
+  },
+  {
+    loc: "https://designershangout.com/font-generator",
+    lastmod: "2024-12-01",
+    changefreq: "weekly",
+    priority: 0.8,
+  },
+  {
+    loc: "https://designershangout.com/design-critique",
+    lastmod: "2024-12-01",
+    changefreq: "weekly",
+    priority: 0.9,
+  },
+];
+
+// Define the `/sitemap.xml` route
+app.get("/sitemap.xml", (req, res) => {
+  // Generate the XML content
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  ${staticUrls
+    .map(
+      (url) => `
+  <url>
+    <loc>${url.loc}</loc>
+    <lastmod>${url.lastmod}</lastmod>
+    <changefreq>${url.changefreq}</changefreq>
+    <priority>${url.priority}</priority>
+  </url>`
+    )
+    .join("")}
+</urlset>`;
+
+  // Set the response content type to XML
+  res.header("Content-Type", "application/xml");
+  res.send(sitemap);
+});
+
 connectDB()
   .then(() => {
     app.listen(port, () => {
